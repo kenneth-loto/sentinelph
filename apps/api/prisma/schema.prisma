@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Earthquake {
+  id         String   @id @default(cuid())
+  externalId String   @unique
+  magnitude  Float
+  place      String
+  lat        Float
+  lng        Float
+  depth      Float
+  occurredAt DateTime
+  url        String?
+  alert      String?
+  tsunami    Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  @@map("earthquakes")
+}
+
+model TyphoonEvent {
+  id         String      @id @default(cuid())
+  externalId String      @unique
+  name       String
+  category   String?
+  lat        Float
+  lng        Float
+  windSpeed  Float?
+  pressure   Float?
+  status     EventStatus @default(ACTIVE)
+  occurredAt DateTime
+  source     String
+  createdAt  DateTime    @default(now())
+
+  @@map("typhoon_events")
+}
+
+model DisasterAlert {
+  id          String    @id @default(cuid())
+  externalId  String    @unique
+  title       String
+  description String?
+  type        AlertType
+  severity    Severity
+  lat         Float?
+  lng         Float?
+  country     String?
+  occurredAt  DateTime
+  source      String
+  url         String?
+  createdAt   DateTime  @default(now())
+
+  @@map("disaster_alerts")
+}
+
+enum EventStatus {
+  ACTIVE
+  INACTIVE
+  RESOLVED
+}
+
+enum AlertType {
+  EARTHQUAKE
+  TYPHOON
+  FLOOD
+  VOLCANO
+  DROUGHT
+  WILDFIRE
+  OTHER
+}
+
+enum Severity {
+  LOW
+  MODERATE
+  HIGH
+  CRITICAL
+}
