@@ -1,159 +1,75 @@
-# Turborepo starter
+# 🌀 SentinelPH
 
-This Turborepo starter is maintained by the Turborepo core team.
+Philippine Disaster Intelligence Dashboard — real-time monitoring and analytics for typhoons, earthquakes, and natural calamities.
 
-## Using this example
+## Stack
 
-Run the following command:
+| Layer | Tech |
+|---|---|
+| Frontend | Next.js 16 + TypeScript + Tailwind + shadcn/ui |
+| Backend | NestJS 11 + TypeScript |
+| Database | PostgreSQL 16 + Prisma ORM |
+| Cache | Redis 7 |
+| Maps | mapcn (MapLibre GL) |
+| Charts | Recharts via shadcn |
+| Monorepo | Turborepo + Bun |
 
-```sh
-npx create-turbo@latest
-```
+## Prerequisites
 
-## What's inside?
+- [Bun](https://bun.sh) >= 1.3
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
+- Node.js >= 20
 
-This Turborepo includes the following packages/apps:
+## Getting Started
 
-### Apps and Packages
+### 1. Clone and install
+\```bash
+git clone https://github.com/kenneth-loto/sentinelph.git
+cd sentinelph
+bun install
+\```
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+### 2. Setup environment variables
+\```bash
+cp .env.example .env
+cp apps/api/.env.example apps/api/.env
+cp apps/web/.env.example apps/web/.env.local
+\```
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+### 3. Start infrastructure
+\```bash
+docker compose up -d
+\```
 
-### Utilities
+Services:
+- PostgreSQL → localhost:5432
+- Redis → localhost:6379  
+- PgAdmin → http://localhost:5050 (admin@sentinel.dev / admin123)
 
-This Turborepo has some additional tools already setup for you:
+### 4. Run development
+\```bash
+bun run dev
+\```
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+- Frontend → http://localhost:3000
+- API → http://localhost:4000/api
 
-### Build
+## Project Structure
 
-To build all apps and packages, run the following command:
+\```
+sentinelph/
+├── apps/
+│   ├── web/          ← Next.js 16 frontend
+│   └── api/          ← NestJS 11 backend
+├── packages/
+│   └── typescript-config/
+├── docker-compose.yml
+└── turbo.json
+\```
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+## Data Sources
 
-```sh
-cd my-turborepo
-turbo build
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo build
-bun dlx turbo build
-bun exec turbo build
-```
-
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo build --filter=docs
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo build --filter=docs
-bun exec turbo build --filter=docs
-bun exec turbo build --filter=docs
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo dev
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo dev
-bun exec turbo dev
-bun exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo dev --filter=web
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
-bun exec turbo dev --filter=web
-bun exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-bun exec turbo login
-bun exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-bun exec turbo link
-bun exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+- [USGS Earthquake API](https://earthquake.usgs.gov/fdsnws/event/1/)
+- [GDACS Global Disaster Alerts](https://www.gdacs.org)
+- [NASA EONET Natural Events](https://eonet.gsfc.nasa.gov/api/v3/events)
+- [Open-Meteo Weather API](https://open-meteo.com)
