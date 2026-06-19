@@ -5,14 +5,9 @@
 			"unsafeParameterDecoratorsEnabled": true
 		}
 	},
-	"vcs": {
-		"enabled": true,
-		"clientKind": "git",
-		"useIgnoreFile": true
-	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!node_modules", "!.next", "!dist", "!build"]
+		"includes": ["**", "!node_modules", "!dist"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -23,13 +18,9 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true,
-			"suspicious": {
-				"noUnknownAtRules": "off"
+			"style": {
+				"useImportType": "off"
 			}
-		},
-		"domains": {
-			"next": "recommended",
-			"react": "recommended"
 		}
 	},
 	"assist": {
